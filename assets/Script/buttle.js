@@ -32,6 +32,14 @@ cc.Class({
             default: null,
             type:cc.Label
         },
+        enemyDamageLabel: {
+            default: null,
+            type:cc.Label
+        },
+        enemyDamageLabelNode: {
+            default: null,
+            type:cc.Node
+        },
         enemyHP: 30000,
         playerHP: 300
     },
@@ -50,7 +58,7 @@ cc.Class({
                 this.moveCursor(-1);
                 break;
             case cc.KEY.space:
-                if(count == 180) {
+                if(count == 130) {
                     count = 0;
                     this.doAction();
                 }
@@ -69,6 +77,7 @@ cc.Class({
 
     doAction: function() {
         console.log(Math.round(this.cursor.y * 10));
+        var damage;
         switch(Math.round(this.cursor.y * 10)) {
             case 6:
                 //TODO このへんのやつ関数になげる
@@ -76,7 +85,9 @@ cc.Class({
                 this.blizad.active = true
                 this.actionNameArea.active = true;
                 this.actionName.string = "ブリザド";
-                this.enemyHP -= 400;
+                damage = 400;
+                this.enemyHP -= damage;
+                this.enemyDamageLabel.string = damage;
                 this.enemyHPLabel.string = this.enemyHP;
                 break;
             case 2:
@@ -84,10 +95,12 @@ cc.Class({
                 this.thunder.active = true;
                 this.actionNameArea.active = true;
                 this.actionName.string = "サンダー";
-                this.enemyHP -= 300;
+                damage = 300
                 if(Math.random() > 0.7) {
-                    this.enemyHP -= 300;
+                    damage *= 2;
                 }
+                this.enemyHP -= damage;
+                this.enemyDamageLabel.string = damage;
                 this.enemyHPLabel.string = this.enemyHP;
                 break;
             case -2:
@@ -104,9 +117,13 @@ cc.Class({
                 this.thunder.active = false;
                 this.blizad.active = false;
                 effectCount = 0;
+                this.enemyDamageLabelNode.active = true;
+                this.scheduleOnce(function(){
+                    this.enemyDamageLabelNode.active = false;   
+                }, 0.5);
             }
         }
-        if(count < 180) {
+        if(count < 130) {
             count += 1;
         }
     },

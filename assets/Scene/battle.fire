@@ -36,7 +36,7 @@
         "__id__": 2
       },
       {
-        "__id__": 66
+        "__id__": 67
       }
     ],
     "_localZOrder": 0,
@@ -2320,8 +2320,34 @@
     "playerHPLabel": {
       "__id__": 31
     },
+    "enemyDamageLabel": {
+      "__id__": 66
+    },
+    "enemyDamageLabelNode": {
+      "__id__": 67
+    },
     "enemyHP": 30000,
     "playerHP": 300
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 67
+    },
+    "_enabled": true,
+    "_useOriginalSize": false,
+    "_actualFontSize": 40,
+    "_fontSize": 40,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": null,
+    "_isSystemFontUsed": true,
+    "_N$string": "300",
+    "_N$horizontalAlign": 1,
+    "_N$verticalAlign": 1,
+    "_N$overflow": 0
   },
   {
     "__type__": "cc.Node",
@@ -2366,33 +2392,13 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "41490A7toNCB6VVP010YaE+",
-    "_active": true,
+    "_active": false,
     "_components": [
       {
-        "__id__": 67
+        "__id__": 66
       }
     ],
     "_prefab": null,
     "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 66
-    },
-    "_enabled": true,
-    "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
-    "_lineHeight": 40,
-    "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
-    "_N$string": "300",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$overflow": 0
   }
 ]
