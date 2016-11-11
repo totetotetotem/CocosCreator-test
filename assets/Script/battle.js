@@ -57,6 +57,9 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        count = 0;
+        effectCount = 0;
+        actionNow = false;
         this.schedule(this.enemyAttack, 5);
         this.repeat=true;
     },
@@ -140,15 +143,14 @@ cc.Class({
             var stoneAnimation = cc.find('Canvas/StoneEdge').getComponent(cc.Animation);
             this.enemyActionLabelArea.active = true;
             stoneAnimation.play();
-            this.playerHP -= 200;
-            if(this.playerHP < 0) this.playerHP = 0;
-            console.log(this.playerHP);
-            this.playerHPLabel.string = this.playerHP;
             this.playerDamageLabelNode.active = true;
             this.scheduleOnce(function(){
                 this.enemyActionLabelArea.active = false;
                 }, 0.3)
             this.scheduleOnce(function(){
+                this.playerHP -= 200;
+                if(this.playerHP < 0) this.playerHP = 0;
+                this.playerHPLabel.string = this.playerHP;            
                 this.playerDamageLabelNode.active = false;   
                 actionNow = false;
             }, 0.5);
@@ -171,8 +173,13 @@ cc.Class({
                 }, 0.5);
             }
         }
-        if(this.playerHP == 0) {
+        if(this.playerHP === 0) {
             //TODO ここにゲームオーバー処理を書く
+            cc.find('Canvas/alice').rotation = 90;
+            actionNow = true;
+            this.scheduleOnce(function() { 
+                cc.director.loadScene('GameOver') ;
+            }, 1);
         }
         if(count < 130) {
             count += 1;
