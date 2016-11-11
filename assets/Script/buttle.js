@@ -1,5 +1,6 @@
 var count = 0;
 var effectCount = 0;
+var actionNow = false;
 cc.Class({
     extends: cc.Component,
 
@@ -61,20 +62,20 @@ cc.Class({
     },
     
     onKeyDown: function (event) {
-        switch(event.keyCode) {
-            case cc.KEY.up:
-                this.moveCursor(1);
-                break;
-            case cc.KEY.down:
-                this.moveCursor(-1);
-                break;
-            case cc.KEY.space:
-                if(count == 130) {
-                    count = 0;
-                    this.doAction();
-                }
-                break;
-        }
+            switch(event.keyCode) {
+                case cc.KEY.up:
+                    this.moveCursor(1);
+                    break;
+                case cc.KEY.down:
+                    this.moveCursor(-1);
+                    break;
+                case cc.KEY.space:
+                    if(count == 130 && actionNow === false) {
+                        count = 0;
+                        this.doAction();
+                    }
+                    break;
+            }
     },
     
     moveCursor: function(dir) {
@@ -115,30 +116,48 @@ cc.Class({
                 this.enemyHPLabel.string = this.enemyHP;
                 break;
             case -2:
+                console.log("cure");
+                actionNow = true;
+                cc.find('Canvas/Cure').getComponent(cc.Animation).play();
+                this.actionNameArea.active = true;
+                this.actionName.string = "やくそう";
+                this.playerHP += 100;
+                if(this.playerHP > 300) this.playerHP = 300;
+                this.playerHPLabel.string = this.playerHP;
+                this.scheduleOnce(function(){
+                    this.actionNameArea.active = false;
+                    actionNow = false;
+                }, 0.5);
                 break;
         }
     },
     
     enemyAttack: function() {
-        var stoneAnimation = cc.find('Canvas/StoneEdge').getComponent(cc.Animation);
-        this.enemyActionLabelArea.active = true;
-        stoneAnimation.play();
-        this.playerHP -= 200;
-        if(this.playerHP < 0) this.playerHP = 0;
-        console.log(this.playerHP);
-        this.playerHPLabel.string = this.playerHP;
-        this.playerDamageLabelNode.active = true;
-        this.scheduleOnce(function(){
-            this.enemyActionLabelArea.active = false;
-        }, 0.3)
-        this.scheduleOnce(function(){
-            this.playerDamageLabelNode.active = false;   
-        }, 0.5);
+            while(actionNow) {
+                cc.delayTime(0.1);
+            }
+            actionNow = true;
+            var stoneAnimation = cc.find('Canvas/StoneEdge').getComponent(cc.Animation);
+            this.enemyActionLabelArea.active = true;
+            stoneAnimation.play();
+            this.playerHP -= 200;
+            if(this.playerHP < 0) this.playerHP = 0;
+            console.log(this.playerHP);
+            this.playerHPLabel.string = this.playerHP;
+            this.playerDamageLabelNode.active = true;
+            this.scheduleOnce(function(){
+                this.enemyActionLabelArea.active = false;
+                }, 0.3)
+            this.scheduleOnce(function(){
+                this.playerDamageLabelNode.active = false;   
+                actionNow = false;
+            }, 0.5);
     },
     
     // called every frame, uncomment this function to activate update callback
     update: function (dt) {
         if(this.thunder.active || this.blizad.active) {
+            actionNow = true;
             effectCount += 1;
             if(effectCount > 60) {
                 this.actionNameArea.active = false;
@@ -147,7 +166,8 @@ cc.Class({
                 effectCount = 0;
                 this.enemyDamageLabelNode.active = true;
                 this.scheduleOnce(function(){
-                    this.enemyDamageLabelNode.active = false;   
+                    this.enemyDamageLabelNode.active = false;
+                    actionNow = false;
                 }, 0.5);
             }
         }
