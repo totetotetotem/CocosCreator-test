@@ -57,6 +57,8 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        this.enemyHPLabel.string = this.enemyHP;
+        this.playerHPLabel.string = this.playerHP;
         count = 0;
         effectCount = 0;
         actionNow = false;
@@ -97,11 +99,12 @@ cc.Class({
             case 6:
                 //TODO このへんのやつ関数になげる
                 console.log("blizad");
-                this.blizad.active = true
+                this.blizad.active = true;
                 this.actionNameArea.active = true;
                 this.actionName.string = "ブリザド";
                 damage = 400;
                 this.enemyHP -= damage;
+                if(this.enemyHP < 0) this.enemyHP = 0;
                 this.enemyDamageLabel.string = damage;
                 this.enemyHPLabel.string = this.enemyHP;
                 break;
@@ -115,6 +118,7 @@ cc.Class({
                     damage *= 2;
                 }
                 this.enemyHP -= damage;
+                if(this.enemyHP < 0) this.enemyHP = 0;
                 this.enemyDamageLabel.string = damage;
                 this.enemyHPLabel.string = this.enemyHP;
                 break;
@@ -173,12 +177,18 @@ cc.Class({
                 }, 0.5);
             }
         }
+        if(this.enemyHP === 0) {
+            cc.find('Canvas/behemoth').rotation = 270;
+            actionNow = true;
+            this.scheduleOnce(function() {
+                cc.director.loadScene('GameClear');
+            }, 2);
+        }
         if(this.playerHP === 0) {
-            //TODO ここにゲームオーバー処理を書く
             cc.find('Canvas/alice').rotation = 90;
             actionNow = true;
             this.scheduleOnce(function() { 
-                cc.director.loadScene('GameOver') ;
+                cc.director.loadScene('GameOver');
             }, 1);
         }
         if(count < 130) {

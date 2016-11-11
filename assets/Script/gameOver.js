@@ -22,13 +22,13 @@ cc.Class({
     },
     
     onKeyDown: function (event) {
-        if(count == 500) {
+        if(count == 100) {
             cc.director.loadScene('battle');
         }
     },
     
     update: function(dt) {
-        if(count < 500) {
+        if(count < 100) {
             console.log(count);
             count += 1;
         }
