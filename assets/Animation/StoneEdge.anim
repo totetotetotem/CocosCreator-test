@@ -1,0 +1,95 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "StoneEdge",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.32,
+  "sample": 60,
+  "speed": 0.4,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "b51fd654-b6bf-4465-b182-95ad609560d4"
+            }
+          },
+          {
+            "frame": 0.03333333333333333,
+            "value": {
+              "__uuid__": "93c16f1c-e47e-4308-a779-413adbd510fb"
+            }
+          },
+          {
+            "frame": 0.06666666666666667,
+            "value": {
+              "__uuid__": "8f185b08-f060-4b19-a97e-8c1e14c666c6"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "51b3729b-5f4c-476e-8699-0ade7c8d1179"
+            }
+          },
+          {
+            "frame": 0.13333333333333333,
+            "value": {
+              "__uuid__": "bfc7900e-5188-4666-a3d7-fb56f748e77d"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "a69289d5-4e9d-48ce-828c-dfae2c4f56ed"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "42ce4196-8763-42c8-9433-57f3603685ed"
+            }
+          },
+          {
+            "frame": 0.23333333333333334,
+            "value": {
+              "__uuid__": "2e71362e-4085-43a6-9481-daf2dc8a1bcd"
+            }
+          },
+          {
+            "frame": 0.26666666666666666,
+            "value": {
+              "__uuid__": "f9d50dc0-8da3-49ee-864c-6f3504bdd43f"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "b51fd654-b6bf-4465-b182-95ad609560d4"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0,
+      "func": "",
+      "params": []
+    }
+  ]
+}

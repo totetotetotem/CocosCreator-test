@@ -3,6 +3,7 @@ var effectCount = 0;
 cc.Class({
     extends: cc.Component,
 
+    //TODO このめちゃ長いproperties、必要無いものはcc.findとか使ってなんとかする
     properties: {
         cursor: {
             default: null,
@@ -40,6 +41,14 @@ cc.Class({
             default: null,
             type:cc.Node
         },
+        playerDamageLabelNode: {
+            default: null,
+            type:cc.Node
+        },
+        enemyActionLabelArea: {
+            default: null,
+            type:cc.Node
+        },
         enemyHP: 30000,
         playerHP: 300
     },
@@ -47,6 +56,8 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        this.schedule(this.enemyAttack, 5);
+        this.repeat=true;
     },
     
     onKeyDown: function (event) {
@@ -108,6 +119,23 @@ cc.Class({
         }
     },
     
+    enemyAttack: function() {
+        var stoneAnimation = cc.find('Canvas/StoneEdge').getComponent(cc.Animation);
+        this.enemyActionLabelArea.active = true;
+        stoneAnimation.play();
+        this.playerHP -= 200;
+        if(this.playerHP < 0) this.playerHP = 0;
+        console.log(this.playerHP);
+        this.playerHPLabel.string = this.playerHP;
+        this.playerDamageLabelNode.active = true;
+        this.scheduleOnce(function(){
+            this.enemyActionLabelArea.active = false;
+        }, 0.3)
+        this.scheduleOnce(function(){
+            this.playerDamageLabelNode.active = false;   
+        }, 0.5);
+    },
+    
     // called every frame, uncomment this function to activate update callback
     update: function (dt) {
         if(this.thunder.active || this.blizad.active) {
@@ -122,6 +150,9 @@ cc.Class({
                     this.enemyDamageLabelNode.active = false;   
                 }, 0.5);
             }
+        }
+        if(this.playerHP == 0) {
+            //TODO ここにゲームオーバー処理を書く
         }
         if(count < 130) {
             count += 1;
