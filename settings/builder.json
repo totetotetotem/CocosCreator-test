@@ -1,0 +1,17 @@
+{
+  "excludeScenes": [],
+  "includeAnySDK": false,
+  "includeSdk": [
+    "anysdk"
+  ],
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.test2",
+  "startScene": "491f61b4-a5a0-4dc9-890b-044b44e96e2b",
+  "title": "test2",
+  "webOrientation": "auto"
+}
