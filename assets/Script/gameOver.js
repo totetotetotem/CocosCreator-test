@@ -29,7 +29,6 @@ cc.Class({
     
     update: function(dt) {
         if(count < 100) {
-            console.log(count);
             count += 1;
         }
     }

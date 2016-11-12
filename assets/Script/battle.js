@@ -1,6 +1,7 @@
 var count = 0;
 var effectCount = 0;
 var actionNow = false;
+var enemyAttackFlag = false;
 cc.Class({
     extends: cc.Component,
 
@@ -50,8 +51,12 @@ cc.Class({
             default: null,
             type:cc.Node
         },
+        progressBar: {
+            default: null,
+            type:cc.Node
+        },
         enemyHP: 30000,
-        playerHP: 300
+        playerHP: 800
     },
 
     // use this for initialization
@@ -62,7 +67,9 @@ cc.Class({
         count = 0;
         effectCount = 0;
         actionNow = false;
-        this.schedule(this.enemyAttack, 5);
+        this.schedule(function() {
+            enemyAttackFlag = true;
+        }, 5);
         this.repeat=true;
     },
     
@@ -129,7 +136,7 @@ cc.Class({
                 this.actionNameArea.active = true;
                 this.actionName.string = "やくそう";
                 this.playerHP += 100;
-                if(this.playerHP > 300) this.playerHP = 300;
+                if(this.playerHP > 800) this.playerHP = 800;
                 this.playerHPLabel.string = this.playerHP;
                 this.scheduleOnce(function(){
                     this.actionNameArea.active = false;
@@ -140,9 +147,6 @@ cc.Class({
     },
     
     enemyAttack: function() {
-            while(actionNow) {
-                cc.delayTime(0.1);
-            }
             actionNow = true;
             var stoneAnimation = cc.find('Canvas/StoneEdge').getComponent(cc.Animation);
             this.enemyActionLabelArea.active = true;
@@ -157,6 +161,7 @@ cc.Class({
                 this.playerHPLabel.string = this.playerHP;            
                 this.playerDamageLabelNode.active = false;   
                 actionNow = false;
+                enemyAttackFlag = false;
             }, 0.5);
     },
     
@@ -177,6 +182,9 @@ cc.Class({
                 }, 0.5);
             }
         }
+        if(actionNow === false && enemyAttackFlag === true) {
+            this.enemyAttack();
+        }
         if(this.enemyHP === 0) {
             cc.find('Canvas/behemoth').rotation = 270;
             actionNow = true;
@@ -193,6 +201,8 @@ cc.Class({
         }
         if(count < 130) {
             count += 1;
+            var bar = count > 30 ? count : 30;
+            this.progressBar.setContentSize(bar - 30, 15);
         }
     },
 });
